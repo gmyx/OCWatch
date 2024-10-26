@@ -1,0 +1,23 @@
+{
+  "name": "ocwatchloader",
+  "version": "1.0.0",
+  "description": "Downloads public data from OCTranspo and transforms it into a DuckDB database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "getStatic": "node scripts\\getstatic"
+  },
+  "repository": {
+    "type": "https://github.com/gmyx/OCWatch",
+    "url": "ocwatch.ca"
+  },
+  "keywords": [
+    "ottawa"
+  ],
+  "author": "Guy Moreau",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "duckdb": "^1.1.1",
+    "unzipper": "^0.12.3"
+  }
+}
