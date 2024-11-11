@@ -18,6 +18,12 @@
   "license": "UNLICENSED",
   "dependencies": {
     "duckdb": "^1.1.1",
+    "nodejs-file-downloader": "^4.13.0",
+    "pbf": "^4.0.1",
+    "protobufjs": "^7.4.0",
     "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "protobufjs-cli": "^1.1.3"
   }
 }

@@ -2,38 +2,32 @@ var duckdb = require('duckdb');
 var fs = require('fs');
 var unzipper = require('unzipper');
 
-const { Readable } = require('stream');
-const { finished } = require('stream/promises');
-
-// URL to download the zip file from
-const ocTranspoPath = 'https://oct-gtfs-emasagcnfmcgeham.z01.azurefd.net/public-access/GTFSExport.zip'
-
-function join(date, options, separator) {
-    function format(option) {
-       let formatter = new Intl.DateTimeFormat('en', option);
-       return formatter.format(date);
-    }
-    return options.map(format).join(separator);
-}
-
-function getRunname() {
-    let options = [{year: 'numeric'}, {month: 'short'}, {day: 'numeric'}];
-    let joined = join(new Date, options, '-');
-    
-    return joined;   
-}
-
-function getDBName() {
-   
-    return getRunname() + '.db';
-}
+//const Readable = require('stream');
+//const finished = require('stream/promises');
+const Downloader = require("nodejs-file-downloader");
+const common = require('./common');
 
 async function downloadStatic(runName) {
-    const stream = fs.createWriteStream(`data\\GTFSExport_${runName}.zip`);    
+    /*const stream = fs.createWriteStream(`data\\GTFSExport_${runName}.zip`);    
 
-    const { body } = await fetch(ocTranspoPath);
+    const { body } = await fetch(common.static.ocTranspoPath);
     
-    await finished(Readable.fromWeb(body).pipe(stream));    
+    await finished(Readable.fromWeb(body).pipe(stream));    */
+    const downloader = new Downloader({
+        url: common.static.ocTranspoPath, //If the file name already exists, a new file with the name 200MB1.zip is created.
+        directory: "./data", //This folder will be created, if it doesn't exist.   
+        fileName: `GTFSExport_${runName}.zip`
+    });
+
+    try {
+        const {filePath,downloadStatus} = await downloader.download(); //Downloader.download() resolves with some useful properties.
+
+        console.log("All done");
+    } catch (error) {
+        //IMPORTANT: Handle a possible error. An error is thrown in case of network errors, or status codes of 400 and above.
+        //Note that if the maxAttempts is set to higher than 1, the error is thrown only if all attempts fail.
+        console.log("Download failed", error);
+    }
 }
 
 async function extractStatic(runName) {
@@ -218,7 +212,7 @@ async function createTables(db, runName) {
 
 //run the code
 (async() => {
-var runName = getRunname();
+var runName = common.static.getRunname();
 console.log ('OCTranspo Static Data Converter');
 console.log (`Run for ${runName}`);
 
@@ -227,9 +221,9 @@ console.log ('Creating Data Folder...');
 fs.existsSync('data') || fs.mkdirSync('data');
 
 console.log ('Createing DB File...');
-var db = new duckdb.Database('data\\' + getDBName());
+var db = new duckdb.Database('data\\' + common.static.getDBName());
 
-console.log (`Downloading GTFS Export from ${ocTranspoPath}`);
+console.log (`Downloading GTFS Export from ${common.static.ocTranspoPath}`);
 fs.existsSync(`data\\GTFSExport_${runName}.zip`) || await downloadStatic(runName);
 
 console.log ('Unzipping data');
