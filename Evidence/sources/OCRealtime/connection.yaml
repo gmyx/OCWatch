@@ -1,0 +1,5 @@
+# This file was automatically generated
+name: ocRealtime
+type: duckdb
+options:
+  filename: OCRealtime.db
