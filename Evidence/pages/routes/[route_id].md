@@ -19,12 +19,6 @@ select trip_id from GTFS.trips where route_id = '${params.route_id}' and service
 select * from GTFS.stop_times where trip_id in (${trips_for_route}) and timepoint = true
 ```
 
-```sql pivot
-pivot GTFS.stop_times ON departure_time 
-```
-
-
-
 <Tabs id="DoW">
    <Tab label="Sunday">   
       a   

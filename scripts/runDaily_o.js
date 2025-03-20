@@ -8,7 +8,7 @@ const common = require('./common');
 
     //copy the data for today into the evidece project
     fs.copyFileSync ('data\\' + common.static.getDBName(), 'Evidence\\sources\\GTFS\\GTFS.db') ;
-    fs.copyFileSync ('data\\' + common.realtime.getDBName(), 'Evidence\\sources\\OCTData\\file.db') ;
+    fs.copyFileSync ('data\\' + common.realtime.getDBName(), 'Evidence\\sources\\OCRealtime\\OCRealtime.db') ;
 
     //update sources
     require('child_process').execSync(
