@@ -1,0 +1,7 @@
+select * from (select try_cast (service_id as integer), * from gtfs.calendar where monday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where tuesday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where wednesday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where thursday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where friday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where saturday=true and try_cast (service_id as integer) is not null limit 1)
+union select * from (select try_cast (service_id as integer), * from gtfs.calendar where sunday=true and try_cast (service_id as integer) is not null limit 1)

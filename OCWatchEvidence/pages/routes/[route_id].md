@@ -1,0 +1,36 @@
+---
+queries:
+   - routes: routes.sql
+---
+
+# {params.route_id} - <Value data={routes_filtered} column=route_long_name />
+
+```sql routes_filtered
+select * from ${routes}
+where route_id = '${params.route_id}'
+```
+
+```sql service_id_monday
+select try_cast (service_id as integer), * from gtfs.calendar where monday=true and try_cast (service_id as integer) is not null  order by service_id desc limit 1
+```
+
+<!--this query need improvement for Oc's stange weekday, using 7 as test for now -->
+```sql trips_for_route
+select trip_id from GTFS.trips where route_id = '${params.route_id}'
+```
+
+```sql stop_times_for_trip_id
+select * from GTFS.stop_times where trip_id in (${trips_for_route}) and timepoint = true
+```
+
+<Tabs id="DoW">
+   <Tab label="Sunday">   
+      a   
+   </Tab>
+   <Tab label="Weekday">
+      b
+   </Tab>
+   <Tab label="Saturday">
+      c
+   </Tab>
+</Tabs>

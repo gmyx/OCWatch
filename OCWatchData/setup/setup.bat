@@ -1,0 +1,1 @@
+npm install @duckdb/node-api nodejs-file-downloader unzipper date-fns protobufjs @turf/turf
