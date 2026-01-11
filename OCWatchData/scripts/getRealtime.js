@@ -36,7 +36,7 @@ console.log(common.realtime.getRunname());
         //const feedMessage = gtfs.transit_realtime.FeedMessage.decode(buffer);
         fs.writeFile(`${rtConfig.realtimePath}/${common.realtime.getRunname()}.pb`, buffer, (err) => {
             if (err) throw err;
-                console.log('Protobuf data successfully written to user.pb');
+                console.log(`Protobuf data successfully written to ${rtConfig.realtimePath}/${common.realtime.getRunname()}.pb`);
             });
     } else {
         console.log ('Bad resonse')

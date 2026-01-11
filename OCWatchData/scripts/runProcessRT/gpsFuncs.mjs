@@ -45,21 +45,32 @@ function bearingDiff(a, b) {
   return Math.abs(((a - b + 540) % 360) - 180);
 }
 
+//this function needs to cache the calculations, since a single run takes longer than the interval
 export function getNextStop(shapeLine, currentPos, stopPoints, vehicleBearing, bearingTolerance = 30) {
     //ensure our GPS point is one the line
     const fixedPos = nearestPointOnLine(shapeLine, currentPos, { units: 'meters' });  
     const currentDist = fixedPos.properties.location; //current distance along the route
 
     //fix distances to stops
-    const stopDistances = stopPoints.features.map(feature => {
-        const closetLine = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
-            const featurePos = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
+    for (const featureId in stopPoints.features)  {
+        const feature = stopPoints.features[featureId];
+        //const closetLine = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
+        const featurePos = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
+
+        if (featurePos.properties.location > currentDist) {
             return {
                 feature: feature,
                 dist: featurePos.properties.location
-        };
-    })
+            };
+        }
+    };
 
-    const nextItem = stopDistances.find(p => p.dist > currentDist);
-    return nextItem;
+    //if we got here, we are at the end of the line, so return last item
+    const feature = stopPoints.features.at(-1);
+    //const closetLine = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
+    const featurePos = nearestPointOnLine(shapeLine, feature, { units: 'meters' });
+    return {
+        feature: feature,
+        dist: featurePos.properties.location
+    };
 }
