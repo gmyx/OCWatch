@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:18.6-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ocwAdmin
+      POSTGRES_PASSWORD: testing42
+      POSTGRES_DB: ocw
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      # Must use forward slashes for Linux containers running on Windows
+      device: /D/DockerLocalFiles/Postgres/Storage

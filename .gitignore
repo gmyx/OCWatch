@@ -1,1 +1,4 @@
-/OCWatchEvidence/sources/GTFS/GTFS.db
+/Postgres/Storage
+/Node-DataLoader/RunDaily/localdata
+/Node-DataLoader/RunDaily/node_modules
+/Node-DataLoader/RunDaily/app/runStatic/node_modules

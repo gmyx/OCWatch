@@ -1,0 +1,8 @@
+FROM evidencedev/serve:latest
+COPY --chown=evidence:evidence . /project
+
+# check=skip=SecretsUsedInArgOrEnv
+ENV EVIDENCE_AUTH_DISABLED=true
+ENV EVIDENCE_TELEMETRY_DISABLED=true
+
+EXPOSE 3000

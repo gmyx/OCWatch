@@ -1,0 +1,20 @@
+# Use the official lightweight Node.js image
+FROM node:alpine
+
+# Install Python and build tools required for native C++ bindings like DuckDB
+RUN apk add --no-cache python3 make g++
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package files first from the root
+COPY package*.json ./
+
+# Force NPM to run installation entirely inside the container 
+RUN npm install
+
+# Copy everything (including the app folder)
+COPY . .
+
+# Run hello.js from inside the app folder
+CMD ["node", "app/RunDaily.js"]

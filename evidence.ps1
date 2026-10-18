@@ -1,0 +1,1 @@
+Docker run --rm -it -v  "D:\DockerLocalFiles\Evidence-OCWatchSite\pages:/pages" --net host ocw

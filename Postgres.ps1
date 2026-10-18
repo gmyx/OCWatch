@@ -1,0 +1,1 @@
+docker run --name ocw-postgres -e POSTGRES_PASSWORD=testing42 -v "D:\DockerLocalFiles\Postgres-Storage:/PGDATA" --net host -d postgres:18.6
